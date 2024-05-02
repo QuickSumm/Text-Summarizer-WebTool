@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Text Summarizer</title>
+        <style>
+            .nav {
+                display: flex;
+                background-color: rgb(34, 156, 255);
+                padding: 20px;
+            }
+            a {
+                align-items: center;
+                padding: 30px;
+                margin-left: auto;
+            }
+            .card {
+                background-color: lightblue;
+                padding: 20px;
+            }
+            .card .card0 {
+                padding-left: 20px;
+            }
+            .card .card1 {
+                background-color: antiquewhite;
+                padding: 10px;
+                margin: 10px;
+            }
+            .card .card2 {
+                background-color: antiquewhite;
+                padding: 10px;
+                margin: 10px;
+            }
+            button {
+                background-color: rgb(34, 156, 255);
+                color: white;
+                padding: 10px 20px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 16px;
+            }
+            #ip {
+                width: 98%;
+                height: 150px;
+                padding: 15px;
+                font-family: Arial, sans-serif;
+                font-size: 14px;
+                color: #333;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                resize: none;
+            }
+            #op {
+                width: 98%;
+                height: 150px;
+                padding: 15px;
+                font-family: Arial, sans-serif;
+                font-size: 14px;
+                color: #333;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                resize: none;
+            }
+            .contact {
+                background-color: rgb(34, 156, 255);
+                padding: 20px;
+                display: flex;
+                justify-content: space-between; /* Align items evenly */
+                align-items: center; /* Center items vertically */
+            }
+            .reservedRights {
+                padding: 10px;
+            }
+            .social-icons {
+                padding: 10px;
+                /* display: flex; */
+            }
+            .social-icons li {
+                margin-left: 10px; /* Add some spacing between icons */
+            }
+        </style>
+    </head>
+    <body>
+        <div class="nav">
+            <h1>Text Summarizer</h1>
+            <a class="btn btn-dark" href="https://github.com/" id="btn2"><svg xmlns="http://www.w3.org/2000/svg"
+                width="16" height="16" fill="currentColor" class="bi bi-github" viewBox="0 0 16 16">
+                <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z" />
+            </svg> &nbsp;Github</a>
+        </div>
+
+        <div class="card">
+            <div class = "card0">
+                <h2>Summarization</h2>
+                <h4>How to Use ?</h4>
+                <ol>
+                    <li><b>Paste</b> Your Long Paragraph in the below TextBox</li>
+                    <li>Click <b>Submit</b></li>
+                    <li>Wait for <b>10</b> seconds</li>
+                    <li>Copy the <b>Summarized Paragraph</b> below</li>
+                </ol>
+            </div>
+            <div class="card1">
+                <h3>Text Summarize</h3>
+                <textarea id="ip" placeholder="Add Text to summarize"></textarea> <br>
+                <button>Submit</button>
+            </div>
+            <div class="card2">
+                <h3>Copy your Summarized Text</h3>
+                <textarea id="op" placeholder="Your summarized output will appear here"></textarea> <br>
+                <button>Copy Text</button>
+            </div>
+        </div>
+
+        <div class="contact">
+            <h2>Contact us</h2>
+            <div class="reservedRights">
+                © 2024 - 2025 All Rigts Reserved
+            </div>
+            <ul class="social-icons">
+                <li><a href="mailto:your_email@example.com"><img src="email-icon.png" alt="Email"></a></li>
+                <li><a href="https://github.com/your_username"><img src="github-icon.png" alt="GitHub"></a></li>
+            </ul>
+        </div>
+
+    </body>
+</html>
