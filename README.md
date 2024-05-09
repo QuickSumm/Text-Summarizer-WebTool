@@ -1,4 +1,4 @@
-# ![image](https://github.com/QuickSumm/Text-Summarizer/blob/main/TS.jpg)  QuickSumm Text Summarizer
+# ![image](https://github.com/QuickSumm/Text-Summarizer/blob/main/static/TS.jpg)  QuickSumm Text Summarizer
 ## Problem Statement :
 Developing a Named Entity Recognition (NER) model with an integrated text summarizer to efficiently extract and summarize key information from unstructured text data.
 ## Problem Description :
