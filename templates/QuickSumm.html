@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Text Summarizer</title>
+    <style>
+        .nav {
+            display: flex;
+            background-color: rgb(34, 156, 255);
+            padding: 20px;
+        }
+
+        .card {
+            background-color: lightblue;
+            padding: 20px;
+        }
+
+        .card .card0 {
+            padding-left: 20px;
+        }
+
+        .card .card1 {
+            background-color: antiquewhite;
+            padding: 10px;
+            margin: 10px;
+        }
+
+        .card .card2 {
+            background-color: antiquewhite;
+            padding: 10px;
+            margin: 10px;
+        }
+
+        button {
+            background-color: rgb(34, 156, 255);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        #input_text,
+        #op {
+            width: 98%;
+            height: 150px;
+            padding: 15px;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            color: #333;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            resize: none;
+        }
+
+        .contact {
+            display: flex;
+            background-color: rgb(34, 156, 255);
+            padding: 20px;
+            text-align: center;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        
+        .contact-info {
+            display: flex;
+        }
+
+        .reservedRights {
+            padding: 10px;
+        }
+
+        .word-count {
+            margin-top: 5px;
+            font-size: 14px;
+            color: gray;
+        }
+
+        /* Dark Mode Styles */
+        .dark-mode .nav {
+            background-color: #333;
+            color: #fff;
+        }
+
+        .dark-mode .card {
+            background-color: #222;
+            color: #fff;
+        }
+
+        .dark-mode .card .card1,
+        .dark-mode .card .card2 {
+            background-color: #444;
+            color: #fff;
+        }
+
+        .dark-mode .contact {
+            background-color: #333;
+            color: #fff;
+        }
+
+        .dark-mode .word-count {
+            color: #ff0000;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="nav">
+        <img src="{{ url_for('static', filename='TS.jpg') }}" style="height: 70px; border-radius: 10%;">
+        <h1 style="margin-left: auto;">QuickSumm: Text Summarizer</h1>
+        <button id="toggle-dark-mode" style="margin-left: auto; font-size: 3rem;"><i
+                class="fas fa-toggle-on"></i></button>
+    </div>
+
+    <div class="card">
+        <div class="card0">
+            <h2>Welcome to QuickSumm!</h2>
+            <h4>How it Works:</h4>
+            <ol>
+                <li><b>Paste</b> Your Long Paragraph in the below TextBox</li>
+                <li>Click <b>Summarize</b></li>
+                <li>Wait for <b>10</b> seconds</li>
+                <li>Copy the <b>Summarized Paragraph</b> below</li>
+                <li>Use the <b>Clear</b> button to erase the text and start over</li>
+            </ol>
+        </div>
+        <div class="card1">
+            <h3>Text Summarize</h3>
+            <form id="myform" action="/summarize" method="POST">
+                <textarea id="input_text" name="input_text" placeholder="Add Text to summarize">{{ text }}</textarea>
+                <br>
+                <button type="submit" id="summarize" onclick="summarize()">Summarize</button>
+                <button type="button" onclick="clearText()">Clear</button>
+            </form>
+        </div>
+        <div class="card2">
+            <h3>Summarized Text</h3>
+            <textarea id="op" placeholder="Get your summarized text here.">{{ summary }}</textarea>
+            <br>
+            <button onclick="copyText()">Copy Text</button>
+        </div>
+    </div>
+
+    <div class="contact">
+        <p>© 2024 - 2025 All Rights Reserved</p>
+        <div class="contact-info">
+            <h4>Contact us</h4>
+            <a href="mailto:greentrust.rentals@gmail.com" style="margin-top: 20px; margin-left: 20px;"><i class="fa fa-envelope" aria-hidden="true"></i></a>
+            <a href="https://github.com/GreenTrust-Rentals/Text-Summarizer" style="margin-top: 20px; margin-left: 20px;"><i class="fa-brands fa-github"></i></a>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript for character count
+        const textArea = document.getElementById('input_text');
+        const outputTextArea = document.getElementById('op');
+        
+        // JavaScript for clearing text areas
+        function clearText() {
+            textArea.value = '';
+            outputTextArea.value = '';
+        }
+
+        // JavaScript for copying text
+        function copyText() {
+            outputTextArea.select();
+            document.execCommand('copy');
+        }
+
+        // JavaScript for toggling dark mode
+        const toggleDarkModeButton = document.getElementById('toggle-dark-mode');
+        toggleDarkModeButton.addEventListener('click', function () {
+            const isDarkModeEnabled = document.body.classList.toggle('dark-mode');
+            toggleDarkModeButton.innerHTML = isDarkModeEnabled ? '<i class="fas fa-toggle-off"></i>' : '<i class="fas fa-toggle-on"></i> ';
+            localStorage.setItem('darkModeEnabled', isDarkModeEnabled);
+        });
+
+        // Check if the user had enabled dark mode previously
+        const isDarkModePreviouslyEnabled = localStorage.getItem('darkModeEnabled') === 'true';
+        if (isDarkModePreviouslyEnabled) {
+            document.body.classList.add('dark-mode');
+            toggleDarkModeButton.innerHTML = '<i class="fas fa-toggle-off"></i>';
+        }
+        
+    </script>
+</body>
+
+</html>
