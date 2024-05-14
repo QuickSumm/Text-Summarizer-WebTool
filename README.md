@@ -62,6 +62,19 @@ Our solution integrates state-of-the-art NER techniques with advanced text summa
     ```bash
     python ../ner_text_summarizer/text_summarizer.py example.txt
     ```
+## Project Snapshots
+
+- Input Field
+ ![image](https://github.com/QuickSumm/Text-Summarizer/assets/121707091/9274798f-b42f-408a-b3ad-f3bc8e53d4e5)
+
+- Output Field
+  ![image](https://github.com/QuickSumm/Text-Summarizer/assets/121707091/529ac993-ed66-48f7-8f27-66c308a7ce23)
+
+- sample test case
+  ![image](https://github.com/QuickSumm/Text-Summarizer/assets/121707091/8998b852-ed2d-454a-a815-96863c92cfef)
+
+- Dark mode functionality
+  ![image](https://github.com/QuickSumm/Text-Summarizer/assets/121707091/49fc6974-64fa-4a6a-85d2-35e524b6c174)
 
 ## Contributing
 
