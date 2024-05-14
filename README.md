@@ -70,7 +70,7 @@ Our solution integrates state-of-the-art NER techniques with advanced text summa
 - Output Field
   ![image](https://github.com/QuickSumm/Text-Summarizer/assets/121707091/529ac993-ed66-48f7-8f27-66c308a7ce23)
 
-- sample test case
+- Sample test case
   ![image](https://github.com/QuickSumm/Text-Summarizer/assets/121707091/8998b852-ed2d-454a-a815-96863c92cfef)
 
 - Dark mode functionality
