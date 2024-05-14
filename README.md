@@ -62,7 +62,7 @@ Our solution integrates state-of-the-art NER techniques with advanced text summa
     ```bash
     python ../ner_text_summarizer/text_summarizer.py example.txt
     ```
-## Project Snapshots
+## Snapshots of QuickSumm 
 
 - Input Field
  ![image](https://github.com/QuickSumm/Text-Summarizer/assets/121707091/9274798f-b42f-408a-b3ad-f3bc8e53d4e5)
