@@ -36,6 +36,22 @@
             margin: 10px;
         }
 
+        .card2 {
+            background-color: antiquewhite;
+            padding: 10px;
+            margin: 10px;
+            text-align: center; 
+        }
+
+        #drop_zone {
+            border: 2px dashed #ccc;
+            padding: 20px;
+            text-align: center;
+            background-color: white; 
+            margin: auto; 
+            width: 50%; 
+        }
+
         button {
             background-color: rgb(34, 156, 255);
             color: white;
@@ -126,7 +142,7 @@
             <ol>
                 <li><b>Paste</b> Your Long Paragraph in the below TextBox</li>
                 <li>Click <b>Summarize</b></li>
-                <li>Wait for <b>10</b> seconds</li>
+                <li>Wait for <b>5</b> seconds</li>
                 <li>Copy the <b>Summarized Paragraph</b> below</li>
                 <li>Use the <b>Clear</b> button to erase the text and start over</li>
             </ol>
@@ -146,6 +162,14 @@
             <br>
             <button onclick="copyText()">Copy Text</button>
         </div>
+        <div class="card2">
+            <h3>Upload File to Summarize</h3>
+            <div id="drop_zone" style="border: 2px dashed #ccc; padding: 20px; text-align: center;">
+                Drag and drop a file here or click to select a file.
+            </div>
+            <input type="file" id="file_input" style="display: none;">
+            <p id="file_name"></p>
+        </div>
     </div>
 
     <div class="contact">
@@ -158,23 +182,19 @@
     </div>
 
     <script>
-        // JavaScript for character count
         const textArea = document.getElementById('input_text');
         const outputTextArea = document.getElementById('op');
-        
-        // JavaScript for clearing text areas
+
         function clearText() {
             textArea.value = '';
             outputTextArea.value = '';
         }
 
-        // JavaScript for copying text
         function copyText() {
             outputTextArea.select();
             document.execCommand('copy');
         }
 
-        // JavaScript for toggling dark mode
         const toggleDarkModeButton = document.getElementById('toggle-dark-mode');
         toggleDarkModeButton.addEventListener('click', function () {
             const isDarkModeEnabled = document.body.classList.toggle('dark-mode');
@@ -182,13 +202,91 @@
             localStorage.setItem('darkModeEnabled', isDarkModeEnabled);
         });
 
-        // Check if the user had enabled dark mode previously
         const isDarkModePreviouslyEnabled = localStorage.getItem('darkModeEnabled') === 'true';
         if (isDarkModePreviouslyEnabled) {
             document.body.classList.add('dark-mode');
             toggleDarkModeButton.innerHTML = '<i class="fas fa-toggle-off"></i>';
         }
-        
+
+        const dropZone = document.getElementById('drop_zone');
+        const fileInput = document.getElementById('file_input');
+        const fileNameDisplay = document.getElementById('file_name');
+
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.style.backgroundColor = '#f0f0f0';
+        });
+
+        dropZone.addEventListener('dragleave', () => {
+            dropZone.style.backgroundColor = '';
+        });
+
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.style.backgroundColor = '';
+            const file = e.dataTransfer.files[0];
+            handleFile(file);
+        });
+
+        dropZone.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        fileInput.addEventListener('change', () => {
+            const file = fileInput.files[0];
+            handleFile(file);
+        });
+
+        function handleFile(file) {
+            fileNameDisplay.textContent = file.name;
+
+            const formData = new FormData();
+            formData.append('file', file);
+
+            fetch('/upload', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    alert(data.error);
+                } else {
+                    textArea.value = data.text;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        document.getElementById('summarize').addEventListener('click', function (event) {
+            event.preventDefault(); 
+            const text = textArea.value;
+            if (text.trim() !== '') {
+                fetch('/summarize', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ input_text: text })
+                })
+                .then(response => response.json())
+                .then(result => {
+                    if (result.error) {
+                        alert(result.error);
+                    } else {
+                        outputTextArea.value = result.summary;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            } else {
+                alert('Please enter or upload text to summarize.');
+            }
+        });
+
     </script>
 </body>
 
