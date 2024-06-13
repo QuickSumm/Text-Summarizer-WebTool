@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -30,13 +29,20 @@
             margin: 10px;
         }
 
-        .card .card2 {
+        .card .card2 .card3 {
             background-color: antiquewhite;
             padding: 10px;
             margin: 10px;
         }
 
         .card2 {
+            background-color: antiquewhite;
+            padding: 10px;
+            margin: 10px;
+            text-align: center; 
+        }
+
+        .card3 {
             background-color: antiquewhite;
             padding: 10px;
             margin: 10px;
@@ -84,7 +90,6 @@
             align-items: center;
         }
 
-        
         .contact-info {
             display: flex;
         }
@@ -126,7 +131,6 @@
         }
     </style>
 </head>
-
 <body>
     <div class="nav">
         <img src="{{ url_for('static', filename='TS.jpg') }}" style="height: 70px; border-radius: 10%;">
@@ -150,19 +154,21 @@
         <div class="card1">
             <h3>Text Summarize</h3>
             <form id="myform" action="/summarize" method="POST">
-                <textarea id="input_text" name="input_text" placeholder="Add Text to summarize">{{ text }}</textarea>
+                <textarea id="input_text" name="input_text" placeholder="Add Text to summarize"></textarea>
+                <div class="word-count" id="input_word_count">Word Count: 0</div>
                 <br>
-                <button type="submit" id="summarize" onclick="summarize()">Summarize</button>
+                <button type="submit" id="summarize">Summarize</button>
                 <button type="button" onclick="clearText()">Clear</button>
             </form>
         </div>
         <div class="card2">
             <h3>Summarized Text</h3>
-            <textarea id="op" placeholder="Get your summarized text here.">{{ summary }}</textarea>
+            <textarea id="op" placeholder="Get your summarized text here."></textarea>
+            <div class="word-count" id="output_word_count">Word Count: 0</div>
             <br>
             <button onclick="copyText()">Copy Text</button>
         </div>
-        <div class="card2">
+        <div class="card3">
             <h3>Upload File to Summarize</h3>
             <div id="drop_zone" style="border: 2px dashed #ccc; padding: 20px; text-align: center;">
                 Drag and drop a file here or click to select a file.
@@ -184,10 +190,27 @@
     <script>
         const textArea = document.getElementById('input_text');
         const outputTextArea = document.getElementById('op');
+        const inputWordCount = document.getElementById('input_word_count');
+        const outputWordCount = document.getElementById('output_word_count');
+
+        function updateWordCount(text, element) {
+            const wordCount = text.split(/\s+/).filter(word => word.length > 0).length;
+            element.textContent = `Word Count: ${wordCount}`;
+        }
+
+        textArea.addEventListener('input', () => {
+            updateWordCount(textArea.value, inputWordCount);
+        });
+
+        outputTextArea.addEventListener('input', () => {
+            updateWordCount(outputTextArea.value, outputWordCount);
+        });
 
         function clearText() {
             textArea.value = '';
             outputTextArea.value = '';
+            updateWordCount('', inputWordCount);
+            updateWordCount('', outputWordCount);
         }
 
         function copyText() {
@@ -232,36 +255,38 @@
             fileInput.click();
         });
 
-        fileInput.addEventListener('change', () => {
-            const file = fileInput.files[0];
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
             handleFile(file);
         });
 
         function handleFile(file) {
-            fileNameDisplay.textContent = file.name;
+            if (file) {
+                fileNameDisplay.textContent = `Selected file: ${file.name}`;
+                const formData = new FormData();
+                formData.append('file', file);
 
-            const formData = new FormData();
-            formData.append('file', file);
-
-            fetch('/upload', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.error) {
-                    alert(data.error);
-                } else {
-                    textArea.value = data.text;
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+                fetch('/upload', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        alert(data.error);
+                    } else {
+                        textArea.value = data.text;
+                        updateWordCount(data.text, inputWordCount);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            }
         }
 
         document.getElementById('summarize').addEventListener('click', function (event) {
-            event.preventDefault(); 
+            event.preventDefault();
             const text = textArea.value;
             if (text.trim() !== '') {
                 fetch('/summarize', {
@@ -277,6 +302,7 @@
                         alert(result.error);
                     } else {
                         outputTextArea.value = result.summary;
+                        updateWordCount(result.summary, outputWordCount);
                     }
                 })
                 .catch(error => {
@@ -286,8 +312,6 @@
                 alert('Please enter or upload text to summarize.');
             }
         });
-
     </script>
 </body>
-
 </html>
