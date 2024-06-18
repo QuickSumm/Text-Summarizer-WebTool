@@ -2,11 +2,10 @@ import os
 from flask import Flask, render_template, request, jsonify
 from werkzeug.utils import secure_filename
 from QuickSumm import summarize_text
-import PyPDF2
 import chardet
 
 UPLOAD_FOLDER = 'uploads'
-ALLOWED_EXTENSIONS = {'txt', 'pdf', 'docx'}
+ALLOWED_EXTENSIONS = {'txt'}
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -24,15 +23,6 @@ def extract_text_from_file(filepath, file_extension):
             result = chardet.detect(raw_data)
             encoding = result['encoding']
             text = raw_data.decode(encoding)
-    elif file_extension == 'pdf':
-        with open(filepath, 'rb') as f:
-            reader = PyPDF2.PdfFileReader(f)
-            text = ""
-            for page_num in range(reader.numPages):
-                text += reader.getPage(page_num).extract_text()
-    elif file_extension == 'docx':
-        # Handle .docx files
-        pass
     else:
         text = ""
     return text
