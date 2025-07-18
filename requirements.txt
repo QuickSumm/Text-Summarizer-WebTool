@@ -1,1 +1,6 @@
-
+Flask
+Werkzeug
+nltk
+spacy
+chardet
+gunicorn
