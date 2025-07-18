@@ -9,7 +9,15 @@ nltk.download('punkt')
 nltk.download('stopwords')
 
 # Load SpaCy English model
-nlp = spacy.load("en_core_web_sm")
+# nlp = spacy.load("en_core_web_sm")
+
+# Load SpaCy English model (auto-download if not present)
+try:
+    nlp = spacy.load("en_core_web_sm")
+except OSError:
+    from spacy.cli import download
+    download("en_core_web_sm")
+    nlp = spacy.load("en_core_web_sm")
 
 def summarize_text(text, ratio=0.3, include_named_entities=False):
     sentences = sent_tokenize(text)
