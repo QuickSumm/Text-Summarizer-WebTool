@@ -1,5 +1,13 @@
-# ![image](https://github.com/QuickSumm/Text-Summarizer/blob/main/static/TS.jpg) QuickSumm : Text Summarizer
-# Named Entity Recognition (NER) Model with Integrated Text Summarizer
+![QuickSumm Banner](https://github.com/QuickSumm/Text-Summarizer/blob/main/static/TS.jpg)
+
+# QuickSumm : Text Summarizer
+
+![Python Version](https://img.shields.io/badge/python-3.8%2B-blue.svg)
+![GitHub Repo Size](https://img.shields.io/github/repo-size/QuickSumm/Text-Summarizer?color=orange&style=flat)
+
+---
+
+## Named Entity Recognition (NER) Model with Integrated Text Summarizer
 
 This repository contains an integrated solution for Named Entity Recognition (NER) coupled with a text summarizer to efficiently extract and summarize key information from unstructured text data.
 
@@ -26,13 +34,13 @@ Our solution integrates state-of-the-art NER techniques with advanced text summa
 1. Clone this repository:
 
     ```bash
-    git clone https://github.com/yourusername/ner_text_summarizer.git
+    git clone https://github.com/QuickSumm/Text-Summarizer-WebTool.git
     ```
 
 2. Navigate to the project directory:
 
     ```bash
-    cd ner_text_summarizer
+    cd Text-Summarizer-WebTool
     ```
 
 3. Install dependencies:
@@ -43,25 +51,20 @@ Our solution integrates state-of-the-art NER techniques with advanced text summa
 
 ## Usage
 
-### Example Usage
+### Run the Flask Web App Locally
 
-1. Navigate to the `examples` directory:
-
-    ```bash
-    cd examples
-    ```
-
-2. Run the NER model on an example text file:
+1. Run the app:
 
     ```bash
-    python ../ner_text_summarizer/ner_model.py example.txt
+    python app.py
     ```
 
-3. Run the text summarizer on the same example text file:
+2. Open your browser and go to:
 
-    ```bash
-    python ../ner_text_summarizer/text_summarizer.py example.txt
     ```
+    http://127.0.0.1:5000/
+    ```
+
 ## Snapshots of QuickSumm 
 
 - Input Field
