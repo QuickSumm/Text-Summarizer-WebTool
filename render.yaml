@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: QuickSumm_TextSummarizer
+    env: python
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn app:app"
